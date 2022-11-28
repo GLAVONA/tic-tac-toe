@@ -62,6 +62,7 @@ const game = (()=>{
             if(haveWinner())
             {
                 alert(`${currentActivePlayer.name} won!`)
+                counter = 0;
             }
             else if (counter === 9){
                 alert("DRAAAAAAAW!")

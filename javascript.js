@@ -37,8 +37,8 @@ const Player = (name, symbol)=> {
 
 
 const game = (()=>{
-    const player1 = Player(prompt("Player 1 name:"), "X");
-    const player2 = Player(prompt("Player 2 name:"), "O");
+    const player1 = Player(prompt("Player 1 name:") || "Player 1", "X");
+    const player2 = Player(prompt("Player 2 name:")|| "Player 2", "O");
     const winConditions = [
         [0,1,2],
         [3,4,5],
@@ -62,6 +62,10 @@ const game = (()=>{
             if(haveWinner())
             {
                 alert(`${currentActivePlayer.name} won!`)
+            }
+            else if (counter === 9){
+                alert("DRAAAAAAAW!")
+                counter = 0;
             }
 
             switch (currentActivePlayer){

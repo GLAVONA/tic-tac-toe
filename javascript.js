@@ -81,7 +81,7 @@ const game = (()=>{
 
     const haveWinner = ()=>{
         const currentBoard = board.getBoardStatus();
-        let winner = false;
+        let gameWon = false;
         for (let i = 0; i < winConditions.length; i++) {
             const condition = winConditions[i];
             const cellA = currentBoard[condition[0]];
@@ -92,11 +92,11 @@ const game = (()=>{
                 continue;                
             }
             if (cellA == cellB && cellB == cellC){
-                winner = true;
+                gameWon = true;
                 break;
             }            
         }
-        return winner;
+        return gameWon;
     }
 
     const resetGame = () =>{

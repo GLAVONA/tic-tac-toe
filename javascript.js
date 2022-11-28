@@ -55,7 +55,7 @@ const game = (()=>{
 
     addEventListener("click",(e)=>{
         const cellClicked = e.target;
-        if (cellClicked.textContent.trim()==="" && cellClicked.classList.contains("cell")){
+        if (cellClicked.textContent.trim()==="" && cellClicked.classList.contains("cell") && !haveWinner()){
             cellClicked.textContent = currentActivePlayer.symbol;
             board.updateGameboardArray(cellClicked.id-1, currentActivePlayer.symbol)
             counter++;

@@ -13,7 +13,7 @@
     grid-template-rows: repeat(3, min(30vh,30vw));    
 }
 
-.gameboard>div[id*="cell"]{
+.gameboard>.cell{
     display: flex;
     border: 1px solid black;
     justify-content: center;

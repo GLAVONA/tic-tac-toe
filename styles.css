@@ -1,0 +1,21 @@
+
+.container{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.gameboard{
+    display: grid;
+    grid-template-columns: repeat(3, min(30vh,30vw));
+    grid-template-rows: repeat(3, min(30vh,30vw));    
+}
+
+.gameboard>div[id*="cell"]{
+    display: flex;
+    border: 1px solid black;
+    justify-content: center;
+    align-items: center;    
+}

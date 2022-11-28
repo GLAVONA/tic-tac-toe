@@ -1,23 +1,32 @@
 const board = (()=>{
 
-    const gameboard = [];
+    let gameboard = ["","","","","","","","","",];
 
     const renderBoard = ()=>{
         for (let i = 1; i <= gameboard.length; i++) {
-            let currentCell = document.getElementById(`cell${i}`).childNodes[1];
+            let currentCell = document.getElementById(`${i}`);
             currentCell.textContent = gameboard[i-1];
         }
     };
 
     const getGameBoardLength = ()=>{
-        return gameboard.length
+        return gameboard.length;
     }
 
-    const updateGameboardArray=(symbol)=>{
-        gameboard.push(symbol);
+    const updateGameboardArray=(index,symbol)=>{
+        gameboard[index] = symbol;
     }
 
-    return {renderBoard,getGameBoardLength,updateGameboardArray}
+    const getBoardStatus = ()=>{
+        return gameboard;
+    }
+
+    const restartGameboard= ()=>{
+        gameboard = ["","","","","","","","","",];
+        renderBoard();
+    }
+
+    return {renderBoard,getGameBoardLength,updateGameboardArray,getBoardStatus,restartGameboard}
 
 })();
 
@@ -28,8 +37,18 @@ const Player = (name, symbol)=> {
 
 
 const game = (()=>{
-    const player1 = Player("Jim", "X");
-    const player2 = Player("Bob", "O");
+    const player1 = Player(prompt("Player 1 name:"), "X");
+    const player2 = Player(prompt("Player 2 name:"), "O");
+    const winConditions = [
+        [0,1,2],
+        [3,4,5],
+        [6,7,8],
+        [0,3,6],
+        [1,4,7],
+        [2,5,8],
+        [0,4,8],
+        [2,4,6]
+    ];
 
     let counter = 0;
     let currentActivePlayer = player1;
@@ -38,8 +57,13 @@ const game = (()=>{
         const cellClicked = e.target;
         if (cellClicked.textContent.trim()==="" && cellClicked.classList.contains("cell")){
             cellClicked.textContent = currentActivePlayer.symbol;
-            board.updateGameboardArray(currentActivePlayer.symbol)
+            board.updateGameboardArray(cellClicked.id-1, currentActivePlayer.symbol)
             counter++;
+            if(haveWinner())
+            {
+                alert(`${currentActivePlayer.name} won!`)
+            }
+
             switch (currentActivePlayer){
                 case player1:
                     currentActivePlayer = player2;
@@ -48,12 +72,33 @@ const game = (()=>{
                     currentActivePlayer = player1;
                     break;
             }
-
         } 
-
     })
 
+    const haveWinner = ()=>{
+        const currentBoard = board.getBoardStatus();
+        let winner = false;
+        for (let i = 0; i < winConditions.length; i++) {
+            const condition = winConditions[i];
+            const cellA = currentBoard[condition[0]];
+            const cellB = currentBoard[condition[1]];
+            const cellC = currentBoard[condition[2]];
+
+            if (cellA == "" || cellB == "" || cellC == "") {
+                continue;                
+            }
+            if (cellA == cellB && cellB == cellC){
+                winner = true;
+                break;
+            }            
+        }
+        return winner;
+    }
+
+    const resetGame = () =>{
+        board.restartGameboard();
+        currentActivePlayer = player1;
+    }
+    const newGameButton = document.getElementById("new-game");
+    newGameButton.addEventListener("click",resetGame);    
 })();
-
-
-board.renderBoard();
